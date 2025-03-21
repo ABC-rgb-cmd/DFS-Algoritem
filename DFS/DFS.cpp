@@ -40,12 +40,8 @@ void readGraph(int& stevilo_vozlisc, int**& C)
         C[v2][v1] = cena;
     }
 }
-void depthSearch(int** C, int s, int stevilo_vozlisc) {
-    if (s < 0 || s >= stevilo_vozlisc) {
-        cout << "Invalid starting vertex!" << endl;
-        return;
-    }
-
+vector<Vozlisce> initializeGraph(int stevilo_vozlisc)
+{
     vector<Vozlisce> vozlisca(stevilo_vozlisc);
 
     // Inicializacija vseh vozlišè
@@ -55,6 +51,13 @@ void depthSearch(int** C, int s, int stevilo_vozlisc) {
         vozlisca[i].predhodnik = -1;
         vozlisca[i].indeks = i;
         vozlisca[i].ime = "V" + to_string(i);
+    }
+    return vozlisca;
+}
+void depthSearch(int** C, int s, vector<Vozlisce> vozlisca) {
+    if (s < 0 || s >= vozlisca.size()) {
+        cout << "Invalid starting vertex!" << endl;
+        return;
     }
 
     // Inicializacija zaèetnega vozlišèa
@@ -73,7 +76,7 @@ void depthSearch(int** C, int s, int stevilo_vozlisc) {
         vozlisca[v].status = 2;
 
         // Pregledamo vse sosede vozlišèa v
-        for (int u = 0; u < stevilo_vozlisc; u++) {
+        for (int u = 0; u < vozlisca.size(); u++) {
             if (C[v][u] != 0 && vozlisca[u].status == 0) { // Èe obstaja povezava in ni obiskan
                 vozlisca[u].status = 1; // v obdelavi
                 vozlisca[u].dolzina = vozlisca[v].dolzina + 1;
@@ -92,6 +95,7 @@ int main()
     bool enabled = true;
     int choice;
     int s;
+    vector<Vozlisce> vozlisca;
     while (enabled)
     {
         cout << "\nIskanje v Globino - Izbira \n1 Preberi graf iz datoteke\n2 Pozeni iskanje iz vozlisca s\n"
@@ -103,6 +107,7 @@ int main()
         case 1:
             //Read Graph
             readGraph(stevilo_vozlisc, C);
+            vozlisca = initializeGraph(stevilo_vozlisc);
             break;
         case 2:
             //Search
@@ -110,7 +115,7 @@ int main()
             cin >> s;
             if (C != nullptr)
             {
-                depthSearch(C, s, stevilo_vozlisc);
+                depthSearch(C, s, vozlisca);
             }
             else
             {
