@@ -54,7 +54,7 @@ vector<Vozlisce> initializeGraph(int stevilo_vozlisc)
     }
     return vozlisca;
 }
-void depthSearch(int** C, int s, vector<Vozlisce> vozlisca) {
+void depthSearch(int** C, int s, vector<Vozlisce>& vozlisca) {
     if (s < 0 || s >= vozlisca.size()) {
         cout << "Invalid starting vertex!" << endl;
         return;
