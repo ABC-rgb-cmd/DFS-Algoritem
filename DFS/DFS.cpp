@@ -87,7 +87,18 @@ void depthSearch(int** C, int s, vector<Vozlisce>& vozlisca) {
     }
 
 }
-
+void outputGraph(vector<Vozlisce> vozlisca)
+{
+    cout << "Rezultati iskanja v globino (DFS):\n";
+    for (int i = 0; i < vozlisca.size(); i++) {
+        cout << "Vozlisce " << i << " - "
+            << "Indeks: " << vozlisca[i].indeks << ", "
+            << "Status: " << vozlisca[i].status << ", "
+            << "Predhodnik: " << vozlisca[i].predhodnik << ", "
+            << "Dolzina od vozlisca s: " << vozlisca[i].dolzina
+            << endl;
+    }
+}
 int main()
 {
     int stevilo_vozlisc;
@@ -124,6 +135,10 @@ int main()
             break;
         case 3:
             //info dump
+            if (C != nullptr)
+            {
+                outputGraph(vozlisca);
+            }
             break;
         case 4:
             //path output
