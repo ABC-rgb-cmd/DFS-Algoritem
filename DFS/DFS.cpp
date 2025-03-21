@@ -59,7 +59,7 @@ void depthSearch(int** C, int s, vector<Vozlisce>& vozlisca) {
         cout << "Invalid starting vertex!" << endl;
         return;
     }
-
+    vozlisca = initializeGraph(vozlisca.size());
     // Inicializacija zaèetnega vozlišèa
     vozlisca[s].status = 1; // v obdelavi
     vozlisca[s].dolzina = 0;
@@ -99,6 +99,23 @@ void outputGraph(vector<Vozlisce> vozlisca)
             << endl;
     }
 }
+void outputPath(vector<Vozlisce> vozlisca, int s, int v)
+{
+    if (v == s)
+    {
+        cout << "Pot je: " << vozlisca[v].ime + " ";
+        return;
+    }
+    else if (vozlisca[v].predhodnik == -1)
+    {
+        cout << "Med " << vozlisca[s].ime << " in " << vozlisca[v].ime << " ni poti" << endl;
+    }
+    else
+    {
+        outputPath(vozlisca, s, vozlisca[v].predhodnik);
+        cout << vozlisca[v].ime + " ";
+    }
+}
 int main()
 {
     int stevilo_vozlisc;
@@ -106,6 +123,7 @@ int main()
     bool enabled = true;
     int choice;
     int s;
+    int v;
     vector<Vozlisce> vozlisca;
     while (enabled)
     {
@@ -142,6 +160,12 @@ int main()
             break;
         case 4:
             //path output
+            if(s>-1 && s<stevilo_vozlisc)
+            {
+                cout << "\nVpisite vozlisce v: ";
+                cin >> v;
+                outputPath(vozlisca, s, v);
+            }
             break;
         case 5:
             enabled = false;
